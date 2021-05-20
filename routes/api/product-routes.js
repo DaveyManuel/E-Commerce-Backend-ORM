@@ -6,7 +6,7 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 // get all products
 router.get('/', (req, res) => {
   try {
-    const productData = await Product.findAll({
+    const productData =  Product.findAll({
       include: [
         Category,
         {model: Tag, through: ProductTag}]
@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
 // get one product
 router.get('/:id', (req, res) => {
   try {
-    const productData = await Product.findByPk(req.params.id, {
+    const productData =  Product.findByPk(req.params.id, {
       include: [
         Category,
         {model: Tag, through: ProductTag}]
@@ -52,12 +52,6 @@ router.post('/', (req, res) => {
       tagIds: [1, 2, 3, 4]
     }
   */
-//  try {
-//    const productData = await Product.create(req.body);
-//    res.status(200).json(productData);
-//  } catch (error) {
-//    res.status(400).json(err);
-//  }
   Product.create(req.body)
     .then((product) => {
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
@@ -125,7 +119,7 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
   try {
-    const productData = await Product.destroy({
+    const productData =  Product.destroy({
       where: { id: req.params.id } 
     });
     if (!productData){
